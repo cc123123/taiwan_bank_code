@@ -10,25 +10,26 @@ class Node(object):
         self.type = type
 
 
-items = []
-banks = []
-posts = []
+items: list = []
+banks: list = []
+posts: list = []
+url: str = 'http://www.esunbank.com.tw/event/announce/BankCode.htm'
 
 
-def init():
-    wb = Workbook()
+def init() -> None:
+    wb: Workbook = Workbook()
     ws = wb.active
     ws.title = "banks"
     ws.sheet_properties.tabColor = '00FF0000'
     print("--- 處理中 ---")
     ws.append(["代號", "金融機構", "類型"])
-    r = requests.get('http://www.esunbank.com.tw/event/announce/BankCode.htm')
+    r = requests.get(url)
     r.encoding = r.apparent_encoding
     doc = pq(r.text)
     style_name = {'style2': "銀行", "style5": "郵局", "style6": "信用合作社", "style3": "漁會", "style4": "農會"}
-    credit_unions = []
-    fishery_associations = []
-    farmers = []
+    credit_unions: list = []
+    fishery_associations: list = []
+    farmers: list = []
     trs = doc("table").eq(1).find("tr")
     sheet_index = 2
     for idx, tr in enumerate(trs):
@@ -47,6 +48,7 @@ def init():
             elif 'style5' == class_name:
                 posts.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
             elif 'style6' == class_name:
+                credit_unions.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
                 credit_unions.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
             elif 'style3' == class_name:
                 fishery_associations.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
