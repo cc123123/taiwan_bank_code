@@ -49,7 +49,6 @@ def init() -> None:
                 posts.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
             elif 'style6' == class_name:
                 credit_unions.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
-                credit_unions.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
             elif 'style3' == class_name:
                 fishery_associations.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
             elif 'style4' == class_name:
