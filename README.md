@@ -1,4 +1,4 @@
+### ä¾†æºé€ç”± è²¡é‡‘è³‡è¨Šè‚¡ä»½æœ‰é™å…¬å¸
+æ”¹ç‚ºç”¨ python åŽ»çˆ¬å–è³‡æ–™
+è³‡æ–™ä¾†ç‚º : [éˆçµä½ç½®](http://www.esunbank.com.tw/event/announce/BankCode.htm)
 
-<b>¨Ó·½³z¥Ñ °]ª÷¸ê°TªÑ¥÷¦³­­¤½¥q ¨ú±o¬ÛÃö¸ê°T</b>
-<br/>
-±N©Ò¦³ªº ¥N¸¹ ©Mª÷¿Ä¾÷ºc°µ¦¨ csv ®æ¦¡¡A¤w¤è«K³B²zªº¼Ò¦¡¡C¶i¦æ°Ê§@¡C
