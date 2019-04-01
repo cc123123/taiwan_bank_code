@@ -1,6 +1,6 @@
 from pyquery import PyQuery as pq
 import requests
-import xlwings as xw
+from openpyxl import Workbook
 
 
 class Node(object):
@@ -16,14 +16,14 @@ posts = []
 
 
 def init():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "banks"
+    ws.sheet_properties.tabColor = '00FF0000'
     print("--- 處理中 ---")
-    app = xw.App(visible=True, add_book=False)
-    wb = app.books.add()
-    sheet = wb.sheets[0]
-    sheet.title = "ogc"
-    sheet.range('A1:A3').value = ["代號", "金融機構", "類型"]
+    ws.append(["代號", "金融機構", "類型"])
     r = requests.get('http://www.esunbank.com.tw/event/announce/BankCode.htm')
-    r.encoding = 'big5'
+    r.encoding = r.apparent_encoding
     doc = pq(r.text)
     style_name = {'style2': "銀行", "style5": "郵局", "style6": "信用合作社", "style3": "漁會", "style4": "農會"}
     credit_unions = []
@@ -35,7 +35,7 @@ def init():
         if idx == 0:
             continue
         tds = pq(tr).find("td")
-        tds_index = len(tds)
+        tds_index: int = len(tds)
         for td_idx in range(0, tds_index, 2):
             id_dom = pq(tds[td_idx])
 
@@ -54,11 +54,12 @@ def init():
                 farmers.append(Node(id_dom.text(), bank_dom.text(), style_name[class_name]))
     total_list = banks + posts + credit_unions + fishery_associations + farmers
     for item in total_list:
-        sheet.range('A' + str(sheet_index)).value = [item.id, item.bank_name, item.type]
+        ws.append([int(item.id), item.bank_name, item.type])
+        ws['A' + str(sheet_index)].number_format = '00#'
         sheet_index += 1
-    sheet.autofit()
+
     wb.save("banks.xlsx")
-    app.quit()
+    wb.close()
     print("--- 處理結束 ---")
 
 
